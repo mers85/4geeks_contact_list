@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
+import { AGENDA_URL } from "../component/helperConstants.js";
 
 // Don't change, here is where we initialize our context, by default its just going to be Null.
 export const Context = React.createContext(null);
@@ -30,6 +31,7 @@ const injectContext = PassedComponent => {
 			 * state.loadSomeData(); <---- calling this function from the flux.js actions
 			 *
 			 **/
+			state.actions.getContactsForAgenda(AGENDA_URL);
 		}, []);
 
 		// the initial value for the context its not null anymore, but the current state of this component,

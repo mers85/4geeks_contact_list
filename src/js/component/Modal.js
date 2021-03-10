@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { Context } from "../store/appContext";
+import { BASE_URL } from "../component/helperConstants.js";
 
 export const Modal = props => {
-	const [state, setState] = useState({
-		//initialize state here
-	});
+	const { actions } = useContext(Context);
+
 	return (
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none" }}>
 			<div className="modal-dialog" role="document">
@@ -26,14 +26,26 @@ export const Modal = props => {
 						)}
 					</div>
 					<div className="modal-body">
-						<p>Warning: unknown consequences after this point... Kidding!</p>
+						<p>Contacto a eliminar: {props.fullName}</p>
 					</div>
 					<div className="modal-footer">
-						<button type="button" className="btn btn-primary">
+						<button
+							type="button"
+							className="btn btn-primary"
+							data-dismiss="modal"
+							aria-label="Close"
+							onClick={() => props.onClose()}>
 							Oh no!
 						</button>
-						<button type="button" className="btn btn-secondary" data-dismiss="modal">
-							Do it!
+						<button
+							type="button"
+							className="btn btn-secondary"
+							data-dismiss="modal"
+							onClick={() => {
+								actions.deleteContact(BASE_URL, props.id);
+								props.onClose();
+							}}>
+							Delete this contact!
 						</button>
 					</div>
 				</div>
@@ -48,7 +60,9 @@ export const Modal = props => {
 Modal.propTypes = {
 	history: PropTypes.object,
 	onClose: PropTypes.func,
-	show: PropTypes.bool
+	show: PropTypes.bool,
+	id: PropTypes.string,
+	fullName: PropTypes.string
 };
 
 /**
