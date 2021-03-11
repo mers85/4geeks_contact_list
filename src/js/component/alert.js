@@ -12,7 +12,6 @@ export const Alert = props => {
 			role="alert">
 			{" " + props.message + " "}
 			<Link
-				t
 				to="/"
 				type="button"
 				className="close"
